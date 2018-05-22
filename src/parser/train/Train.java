@@ -137,7 +137,7 @@ public class Train {
         Iterator iter = myGrammer.getRuleCounts().entrySet().iterator();
         while (iter.hasNext()) {
             Object element = iter.next();
-            counting_dic.compute(((Rule) (((Map.Entry) element).getKey())).getLHS().toString(), (key, oldValue) -> ((oldValue == null) ? 1 : oldValue + (int) ((Map.Entry) element).getValue()));
+            counting_dic.compute(((Rule) (((Map.Entry) element).getKey())).getLHS().toString(), (key, oldValue) -> ((oldValue == null) ?  (int) ((Map.Entry) element).getValue(): oldValue + (int) ((Map.Entry) element).getValue()));
 
         }
         //syntactical prob
@@ -147,7 +147,11 @@ public class Train {
 
             int lhs_count = counting_dic.get(((Rule) element).getLHS().toString());
             int rule_count = myGrammer.getRuleCounts().get(element);
-            ((Rule) element).setMinusLogProb(-Math.log((double) rule_count / (double) lhs_count));
+            double calc=-Math.log((double) rule_count / (double) lhs_count);
+            if(calc < 0){
+                System.out.println(calc);
+            }
+            ((Rule) element).setMinusLogProb(calc);
             System.out.println("hi");
         }
         //lexical prob
@@ -158,6 +162,10 @@ public class Train {
 
             int lhs_count = counting_dic.get(((Rule) element).getLHS().toString());
             int rule_count = myGrammer.getRuleCounts().get(element);
+            double calc=-Math.log((double) rule_count / (double) lhs_count);
+            if(calc < 0){
+                System.out.println(calc);
+            }
             ((Rule) element).setMinusLogProb(-Math.log((double) rule_count / (double) lhs_count));
             System.out.println("hi");
         }
