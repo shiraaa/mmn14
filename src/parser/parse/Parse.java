@@ -38,7 +38,25 @@ public class Parse {
 		//*   Statistical Parsing  *//
 		//*     Point-of-Entry     *//
 		//**************************//
-		
+
+		Grammar testGrammer=new Grammar();
+		//lexical
+		testGrammer.addRule(new Rule("V0","sleeps",true,0));
+		testGrammer.addRule(new Rule("V1","saw",true,0));
+		testGrammer.addRule(new Rule("NN","man",true,-Math.log(0.2)));
+		testGrammer.addRule(new Rule("NN","woman",true,-Math.log(0.2)));
+		testGrammer.addRule(new Rule("NN","dog",true,-Math.log(0.6)));
+		testGrammer.addRule(new Rule("DT","the",true,0));
+		testGrammer.addRule(new Rule("IN","with",true,-Math.log(0.6)));
+		testGrammer.addRule(new Rule("IN","in",true,-Math.log(0.4)));
+
+		//syntactical
+		testGrammer.addRule(new Rule("S","NP VP",false,0));
+		testGrammer.addRule(new Rule("VP","V0",false,-Math.log(0.3)));
+		testGrammer.addRule(new Rule("VP","V1 NP",false,-Math.log(0.7)));
+		testGrammer.addRule(new Rule("NP","DT NN",false,-Math.log(0.6)));
+		testGrammer.addRule(new Rule("NP","NP PP",false,-Math.log(0.4)));
+		testGrammer.addRule(new Rule("PP","IN NP",false,0));
 		if (args.length < 3)
 		{
 			System.out.println("Usage: Parse <goldset> <trainset> <experiment-identifier-string>");
@@ -59,6 +77,7 @@ public class Parse {
 		List<Tree> myParseTrees = new ArrayList<Tree>();		
 		for (int i = 0; i < myGoldTreebank.size(); i++) {
 			List<String> mySentence = myGoldTreebank.getAnalyses().get(i).getYield();
+			//Test: List.of("the","man","saw","the","woman","with","the","dog")
 			Tree myParseTree = Decode.getInstance(myGrammar).decode(mySentence);
 			myParseTrees.add(myParseTree);
 		}
@@ -67,7 +86,7 @@ public class Parse {
 		// TODO
 		
 		// 6. write output
-		writeOutput(args[2], myGrammar, myParseTrees);	
+		writeOutput(args[2], testGrammer, myParseTrees);
 	}
 	
 	

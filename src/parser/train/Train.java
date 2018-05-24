@@ -107,7 +107,7 @@ public class Train {
                 split++;
             }
             //num of daughters is even
-
+            binarize(cloned_daughters.get(split));
             split_node.setDaughters(List.of(cloned_daughters.get(split)));
 
 
@@ -126,7 +126,7 @@ public class Train {
             if (i == split + 1) {
                 sb.append("|");
             }
-            sb.append(s.getIdentifier());
+            sb.append(s.getIdentifier()+".");
             i++;
         }
         return sb.toString();
@@ -152,7 +152,10 @@ public class Train {
                 System.out.println(calc);
             }
             ((Rule) element).setMinusLogProb(calc);
-            System.out.println("hi");
+            if(((Rule) element).getLHS().toString().startsWith("@")){
+                ((Rule) element).setMinusLogProb(0);
+            }
+           // System.out.println("hi");
         }
         //lexical prob
         //not the most efficient but better for understanding
@@ -167,7 +170,7 @@ public class Train {
                 System.out.println(calc);
             }
             ((Rule) element).setMinusLogProb(-Math.log((double) rule_count / (double) lhs_count));
-            System.out.println("hi");
+         //   System.out.println("hi");
         }
 
     }

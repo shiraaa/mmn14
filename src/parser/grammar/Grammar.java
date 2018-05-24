@@ -26,6 +26,10 @@ public class Grammar {
 	protected Set<String> m_setTerminalSymbols = new HashSet<String>();
 	protected Set<String> m_setNonTerminalSymbols = new HashSet<String>();
 
+
+
+	protected Set<Rule> m_setSyntacticUnaryRules = new HashSet<Rule>();
+
 	protected Set<Rule> m_setSyntacticRules = new HashSet<Rule>();
 	protected Set<Rule> m_setLexicalRules = new HashSet<Rule>();
 	protected CountMap<Rule> m_cmRuleCounts = new CountMap<Rule>();
@@ -34,7 +38,10 @@ public class Grammar {
 	public Grammar() {
 		super();
 	}
-	
+	public Set<Rule> getSyntacticUnaryRules() {
+		return m_setSyntacticUnaryRules;
+	}
+
 	public Map<String, Set<Rule>> getLexicalEntries() {
 		return m_lexLexicalEntries;
 	}
@@ -66,6 +73,11 @@ public class Grammar {
 		}
 		else 
 		{
+			if(eRhs.getSymbols().size()==1){
+				r.setUnary(true);
+				getSyntacticUnaryRules().add(r);
+
+			}
 			// update the sets T, N, R
 			getSyntacticRules().add(r);
 			getNonTerminalSymbols().addAll(eLhs.getSymbols());
