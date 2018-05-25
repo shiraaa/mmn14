@@ -18,6 +18,7 @@ public class Decode {
     public static Set<String> m_terminals = null;
     public static HashMap<String, BackPointer>[][] bp = null;
     public static Map<String, Map<String, Rule>> m_unaryRulesTable = null;
+    public static Map<String, Set<Rule>> m_SytacticRulesTable = null;
 
 
     /**
@@ -35,6 +36,8 @@ public class Decode {
             m_setUnaryGrammarRules = g.getSyntacticUnaryRules();
             m_mapLexicalRules = g.getLexicalEntries();
             g.buildUnaryRulesMap();
+            g.buildSyntaticRulesMap();
+            m_SytacticRulesTable = g.getSyntacticRulesTable();
             m_unaryRulesTable = g.getUnaryRulesTable();
             bp = null;
         }
@@ -106,10 +109,10 @@ public class Decode {
                     cky[i - 1][i].put("NN", (double) 0);
                 }
 
-            //unary rules A-->B
+                //unary rules A-->B
 
-                HashMap cloned = (HashMap)cky[i - 1][i].clone();
-                Iterator it1=cloned.entrySet().iterator(); //without clone getting concurrency iterator issue
+                HashMap cloned = (HashMap) cky[i - 1][i].clone();
+                Iterator it1 = cloned.entrySet().iterator(); //without clone getting concurrency iterator issue
 
                 while (it1.hasNext()) {
 
@@ -148,58 +151,66 @@ public class Decode {
                 }*/
 
 
-            for (int span = 1; span <= input_length; span++) {
+            for (int span = 2; span <= input_length; span++) {
                 for (int j = span - 2; j >= 0; j--) {
                     for (int k = j + 1; k <= span - 1; k++) {
                         //System.out.println(span);
                         if (cky[j][k] != null && cky[k][span] != null) {
-                            Iterator it = m_setGrammarRules.iterator();
-                            while (it.hasNext()) {
-                                Rule rule = (Rule) it.next();
-                                List<String> symb_lst = rule.getRHS().getSymbols();
-                                if (symb_lst.size() == 0 || symb_lst.size() > 2) {
-                                    System.out.println("ERROR");
-                                }
-                                // A-->BC
-                                if (symb_lst.size() == 2) {
-                                    String A = rule.getLHS().toString();
-                                    String B = symb_lst.get(0);
-                                    String C = symb_lst.get(1);
-                                    double B_prob;
-                                    double C_prob;
 
-                                    if (cky[j][k].get(B) != null) {
-                                        B_prob = cky[j][k].get(B);
-                                    } else continue;
+                            Iterator it_B = cky[j][k].entrySet().iterator();
+                            Iterator it_C ;
 
-                                    if (cky[k][span].get(C) != null) {
-                                        C_prob = cky[k][span].get(C);
-                                    } else continue;
+                            while (it_B.hasNext()) {
 
-                                    if (B_prob >= 0 && C_prob >= 0) {
-                                        if (cky[j][span] == null) {
-                                            cky[j][span] = new HashMap<>();
-                                        }
-                                        if (cky[j][span].get(A) == null || cky[j][span].get(A) > rule.getMinusLogProb() + B_prob + C_prob) {
+                                Map.Entry B = (Map.Entry) it_B.next();
+                                it_C = cky[k][span].entrySet().iterator();
 
-                                            cky[j][span].put(A, rule.getMinusLogProb() + B_prob + C_prob);
+                                while (it_C.hasNext()) {
 
-                                            if (bp[j][span] == null) {
-                                                bp[j][span] = new HashMap<>();
+                                    Map.Entry C = (Map.Entry) it_C.next();
+                                    Set<Rule> A_set = m_SytacticRulesTable.get(B.getKey().toString() + " " + C.getKey().toString());
+
+                                    if (A_set != null) {
+
+                                        double B_prob = (double) B.getValue();
+                                        double C_prob = (double) C.getValue();
+
+                                        Iterator a_itr = A_set.iterator();
+
+                                        Rule A_rule = null;
+                                        while (a_itr.hasNext()) {
+                                            A_rule= (Rule) a_itr.next();
+                                            String A=A_rule.getLHS().toString();
+
+
+                                            if (cky[j][span] == null) {
+                                                cky[j][span] = new HashMap<>();
                                             }
-                                            bp[j][span].put(A, new BackPointer(k, B, C));
+
+                                           /* if (B_prob < 0 && C_prob < 0){
+                                                System.out.println("prob ERROR");
+                                            }*/
+
+                                            if (cky[j][span].get(A) == null || cky[j][span].get(A) > A_rule.getMinusLogProb() + B_prob + C_prob)
+                                            {
+                                                cky[j][span].put(A, A_rule.getMinusLogProb() + B_prob + C_prob);
+
+                                                if (bp[j][span] == null) {
+                                                    bp[j][span] = new HashMap<>();
+                                                }
+                                                bp[j][span].put(A, new BackPointer(k, B.getKey().toString(), C.getKey().toString()));
+                                            }
                                         }
                                     }
                                 }
                             }
+
                         }
-
-
                     }
                     if (cky[j][span] != null) {
 
-                        HashMap cloned = (HashMap)cky[j][span].clone();
-                        Iterator it=cloned.entrySet().iterator(); //without clone getting concurrency iterator issue
+                        HashMap cloned = (HashMap) cky[j][span].clone();
+                        Iterator it = cloned.entrySet().iterator(); //without clone getting concurrency iterator issue
 
                         while (it.hasNext()) {
                             Map.Entry el = (Map.Entry) it.next();
@@ -284,9 +295,8 @@ public class Decode {
 
         if (bp[j][k] != null) {
             buildTree(new_node_B, bp[j][k].get(B), j, k);
-        }else{
-
         }
+
         if (bp[k][i] != null) {
             buildTree(new_node_C, bp[k][i].get(C), k, i);
         }

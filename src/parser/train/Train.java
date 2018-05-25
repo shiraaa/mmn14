@@ -1,8 +1,8 @@
 package train;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableMultiset;
-import com.google.common.collect.Multimap;
+
+
+
 import grammar.Event;
 import grammar.Grammar;
 import grammar.Rule;
@@ -36,7 +36,7 @@ public class Train {
      */
     public static Train m_singTrainer = null;
     public HashMap<String, Integer> counting_dic = null;
-    private final ImmutableMultiset<String> strings = null;
+
 
     public Train() {
 
@@ -126,7 +126,7 @@ public class Train {
             if (i == split + 1) {
                 sb.append("|");
             }
-            sb.append(s.getIdentifier()+".");
+            sb.append("." + s.getIdentifier());
             i++;
         }
         return sb.toString();
@@ -137,7 +137,7 @@ public class Train {
         Iterator iter = myGrammer.getRuleCounts().entrySet().iterator();
         while (iter.hasNext()) {
             Object element = iter.next();
-            counting_dic.compute(((Rule) (((Map.Entry) element).getKey())).getLHS().toString(), (key, oldValue) -> ((oldValue == null) ?  (int) ((Map.Entry) element).getValue(): oldValue + (int) ((Map.Entry) element).getValue()));
+            counting_dic.compute(((Rule) (((Map.Entry) element).getKey())).getLHS().toString(), (key, oldValue) -> ((oldValue == null) ? (int) ((Map.Entry) element).getValue() : oldValue + (int) ((Map.Entry) element).getValue()));
 
         }
         //syntactical prob
@@ -147,15 +147,15 @@ public class Train {
 
             int lhs_count = counting_dic.get(((Rule) element).getLHS().toString());
             int rule_count = myGrammer.getRuleCounts().get(element);
-            double calc=-Math.log((double) rule_count / (double) lhs_count);
-            if(calc < 0){
+            double calc = -Math.log((double) rule_count / (double) lhs_count);
+            if (calc < 0) {
                 System.out.println(calc);
             }
             ((Rule) element).setMinusLogProb(calc);
-            if(((Rule) element).getLHS().toString().startsWith("@")){
+            if (((Rule) element).getLHS().toString().startsWith("@")) {
                 ((Rule) element).setMinusLogProb(0);
             }
-           // System.out.println("hi");
+            // System.out.println("hi");
         }
         //lexical prob
         //not the most efficient but better for understanding
@@ -165,12 +165,12 @@ public class Train {
 
             int lhs_count = counting_dic.get(((Rule) element).getLHS().toString());
             int rule_count = myGrammer.getRuleCounts().get(element);
-            double calc=-Math.log((double) rule_count / (double) lhs_count);
-            if(calc < 0){
+            double calc = -Math.log((double) rule_count / (double) lhs_count);
+            if (calc < 0) {
                 System.out.println(calc);
             }
             ((Rule) element).setMinusLogProb(-Math.log((double) rule_count / (double) lhs_count));
-         //   System.out.println("hi");
+            //   System.out.println("hi");
         }
 
     }
