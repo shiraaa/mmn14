@@ -17,6 +17,7 @@ public class Decode {
     public static Set<String> m_nonTerminals = null;
     public static Set<String> m_terminals = null;
     public static HashMap<String, BackPointer>[][] bp = null;
+    public static Map<String, Map<String, Rule>> m_unaryRulesTable = null;
 
 
     /**
@@ -33,6 +34,8 @@ public class Decode {
             m_setGrammarRules = g.getSyntacticRules();
             m_setUnaryGrammarRules = g.getSyntacticUnaryRules();
             m_mapLexicalRules = g.getLexicalEntries();
+            g.buildUnaryRulesMap();
+            m_unaryRulesTable = g.getUnaryRulesTable();
             bp = null;
         }
         return m_singDecoder;
@@ -42,8 +45,6 @@ public class Decode {
 
         // Done: Baseline Decoder
         //       Returns a flat tree with NN labels on all leaves
-
-
 
 
         Tree t = CYK(input);
@@ -99,12 +100,35 @@ public class Decode {
 
 
                 }
+
                 if (cky[i - 1][i] == null) {
                     cky[i - 1][i] = new HashMap<>();
                     cky[i - 1][i].put("NN", (double) 0);
                 }
-                //unary rules A-->B
-                Iterator it1 = m_setUnaryGrammarRules.iterator();
+
+            //unary rules A-->B
+
+                HashMap cloned = (HashMap)cky[i - 1][i].clone();
+                Iterator it1=cloned.entrySet().iterator(); //without clone getting concurrency iterator issue
+
+                while (it1.hasNext()) {
+
+                    Map.Entry el = (Map.Entry) it1.next();
+                    if (m_unaryRulesTable.containsKey(el.getKey())) {
+                        Iterator it2 = m_unaryRulesTable.get(el.getKey()).entrySet().iterator();
+
+                        while (it2.hasNext()) {
+
+                            Map.Entry el2 = (Map.Entry) it2.next();
+                            Rule rule = (Rule) el2.getValue();
+                            cky[i - 1][i].put(el2.getKey().toString(), cky[i - 1][i].get(rule.getRHS().toString()) + rule.getMinusLogProb()); //**CHECK PROB**//
+
+                        }
+
+                    }
+                }
+            }
+              /*  Iterator it1 = m_setUnaryGrammarRules.iterator();
                 HashSet<Rule> check_List = new HashSet<>();
                 while (it1.hasNext()) {
                     Rule rule = (Rule) it1.next();
@@ -115,21 +139,20 @@ public class Decode {
                             if (!check_List.contains(rule)) {
                                 cky[i - 1][i].put(rule.getLHS().toString(), cky[i - 1][i].get(rule.getRHS().toString()) + rule.getMinusLogProb());
                                 check_List.add(rule);
-                                it1=m_setUnaryGrammarRules.iterator(); // A new rule was found restart rules iteration
+                                it1 = m_setUnaryGrammarRules.iterator(); // A new rule was found restart rules iteration
                             }
 
                         }
                     }
 
-                }
+                }*/
 
 
-            }
             for (int span = 1; span <= input_length; span++) {
                 for (int j = span - 2; j >= 0; j--) {
                     for (int k = j + 1; k <= span - 1; k++) {
                         //System.out.println(span);
-                        if(cky[j][k]!=null && cky[k][span] !=null) {
+                        if (cky[j][k] != null && cky[k][span] != null) {
                             Iterator it = m_setGrammarRules.iterator();
                             while (it.hasNext()) {
                                 Rule rule = (Rule) it.next();
@@ -172,27 +195,47 @@ public class Decode {
                         }
 
 
-
-
                     }
                     if (cky[j][span] != null) {
-                        Iterator it1 = m_setUnaryGrammarRules.iterator();
+
+                        HashMap cloned = (HashMap)cky[j][span].clone();
+                        Iterator it=cloned.entrySet().iterator(); //without clone getting concurrency iterator issue
+
+                        while (it.hasNext()) {
+                            Map.Entry el = (Map.Entry) it.next();
+                            if (m_unaryRulesTable.containsKey(el.getKey())) {
+                                Iterator it2 = m_unaryRulesTable.get(el.getKey()).entrySet().iterator();
+                                while (it2.hasNext()) {
+                                    Map.Entry el2 = (Map.Entry) it2.next();
+                                    Rule rule = (Rule) el2.getValue();
+                                    cky[j][span].put(el2.getKey().toString(), cky[j][span].get(rule.getRHS().toString()) + rule.getMinusLogProb()); //**CHECK PROB**//
+                                }
+
+                            }
+                        }
+                       /* Iterator it1 = m_setUnaryGrammarRules.iterator();
                         HashSet<Rule> check_List = new HashSet<>();
+                        int checkLst_size = check_List.size();
                         while (it1.hasNext()) {
                             Rule rule = (Rule) it1.next();
                             List<String> symb_lst = rule.getRHS().getSymbols();
                             if (symb_lst.size() == 1) { //check if unary rule
                                 if (cky[j][span].get(rule.getRHS().toString()) != null) {   //check left side is in this entry
+
                                     if (!check_List.contains(rule)) {
                                         check_List.add(rule);
-                                        cky[j][span].put(rule.getLHS().toString(), cky[j][span].get(rule.getRHS().toString()) + rule.getMinusLogProb()); /**CHECK PROB**/
-                                        it1=m_setUnaryGrammarRules.iterator(); // A new NoN terminal fount restart rules iteration
+                                        cky[j][span].put(rule.getLHS().toString(), cky[j][span].get(rule.getRHS().toString()) + rule.getMinusLogProb()); *//**CHECK PROB**//*
+
                                     }
 
                                 }
                             }
+                            if (!it1.hasNext() && check_List.size() > checkLst_size) {
+                                it1 = m_setUnaryGrammarRules.iterator(); // A new NoN terminal fount restart rules iteration
+                                checkLst_size= check_List.size();
+                            }
+                        }*/
 
-                        }
                     }
 
                 }
@@ -209,8 +252,8 @@ public class Decode {
             Node root = new Node("S");
             root.setParent(top);
             top.addDaughter(root);
-            buildTree(root, s, 0, input_length );
-            Tree tree=new Tree(top);
+            buildTree(root, s, 0, input_length);
+            Tree tree = new Tree(top);
             return tree;
         } else {
             return dummyParser(input);
@@ -239,11 +282,13 @@ public class Decode {
         new_node_B.setParent(parent);
         new_node_C.setParent(parent);
 
-        if(bp[j][k] !=null){
-            buildTree(new_node_B, bp[j][k].get(B), j, i);
+        if (bp[j][k] != null) {
+            buildTree(new_node_B, bp[j][k].get(B), j, k);
+        }else{
+
         }
-        if(bp[k][i] !=null) {
-            buildTree(new_node_C, bp[k][i].get(C), j, i);
+        if (bp[k][i] != null) {
+            buildTree(new_node_C, bp[k][i].get(C), k, i);
         }
 
 

@@ -1,10 +1,6 @@
 package grammar;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import utils.CountMap;
 
@@ -28,6 +24,7 @@ public class Grammar {
 
 
 
+	protected Map<String,Map<String,Rule>> m_unaryRulesTable= new HashMap<>();
 	protected Set<Rule> m_setSyntacticUnaryRules = new HashSet<Rule>();
 
 	protected Set<Rule> m_setSyntacticRules = new HashSet<Rule>();
@@ -50,8 +47,36 @@ public class Grammar {
 		this.m_lexLexicalEntries = m_lexLexicalEntries;
 	}
 
+	public Map<String, Map<String,Rule>> getUnaryRulesTable() {
+		return m_unaryRulesTable;
+	}
 	public CountMap<Rule> getRuleCounts() {
 		return m_cmRuleCounts;
+	}
+
+	public void buildUnaryRulesMap() {
+		/***
+		 * ynaryTable
+		 *
+		 * 		|rule rhs1 	     |		 |
+		 * 		|________________|_______|
+		 * 		| rule rhs1 lhs1 |		 |
+		 * 		| rule rhs1	lhs2 |		 |
+		 */
+		Iterator it=m_setSyntacticUnaryRules.iterator();
+		while (it.hasNext()){
+			Rule entry=(Rule)it.next();
+			if(m_unaryRulesTable.containsKey((entry.getRHS().toString()))){
+				Map<String,Rule> table_entry=m_unaryRulesTable.get(entry.getRHS().toString());
+				if(table_entry.containsKey(entry.getLHS()))
+				m_unaryRulesTable.get(entry.getRHS().toString()).put(entry.getLHS().toString(),entry);
+			}
+			else {
+				HashMap new_hashMap=new HashMap<>();
+				new_hashMap.put(entry.getLHS().toString(),entry);
+				m_unaryRulesTable.put(entry.getRHS().toString(),new_hashMap);
+			}
+		}
 	}
 
 	public void addRule(Rule r)

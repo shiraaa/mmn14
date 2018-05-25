@@ -74,8 +74,9 @@ public class Parse {
 		Grammar myGrammar = Train.getInstance().train(myTrainTreebank);
 		
 		// 4. decode
-		List<Tree> myParseTrees = new ArrayList<Tree>();		
-		for (int i = 0; i < myGoldTreebank.size(); i++) {
+		List<Tree> myParseTrees = new ArrayList<Tree>();
+		//myGoldTreebank.size()
+		for (int i = 0; i < 20; i++) {
 			List<String> mySentence = myGoldTreebank.getAnalyses().get(i).getYield();
 			//Test: List.of("the","man","saw","the","woman","with","the","dog")
 			Tree myParseTree = Decode.getInstance(myGrammar).decode(mySentence);
@@ -86,7 +87,7 @@ public class Parse {
 		// TODO
 		
 		// 6. write output
-		writeOutput(args[2], testGrammer, myParseTrees);
+		writeOutput(args[2], myGrammar, myParseTrees);
 	}
 	
 	
