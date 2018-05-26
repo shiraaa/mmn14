@@ -85,7 +85,7 @@ public class Decode {
 
         //Back pointer
         bp = new HashMap[input_length + 1][input_length + 1];
-        try {
+//        try {
 
 
             for (int i = 1; i <= input_length; i++) {
@@ -161,7 +161,10 @@ public class Decode {
             String A = null;
             Map.Entry B;
             Map.Entry C;
-
+            String B_str;
+            String C_str;
+            String[] Barr;
+            String B_opt = "";
             for (int span = 2; span <= input_length; span++) {
                 for (int j = span - 2; j >= 0; j--) {
                     for (int k = j + 1; k <= span - 1; k++) {
@@ -174,13 +177,28 @@ public class Decode {
                             while (it_B.hasNext()) {
 
                                 B = (Map.Entry) it_B.next();
-                                it_C = cky[k][span].entrySet().iterator();
 
-                                while (it_C.hasNext()) {
+                                B_str = B.getKey().toString();
 
-                                    C = (Map.Entry) it_C.next();
-                                    if (!B.getKey().toString().startsWith("@") && !C.getKey().toString().startsWith("@")) {
-                                        A_set = m_SytacticRulesTable.get(B.getKey().toString() + " " + C.getKey().toString());
+                                if (!B_str.startsWith("@")) {
+
+                                    it_C = cky[k][span].entrySet().iterator();
+                                    while (it_C.hasNext()) {
+
+
+                                        C = (Map.Entry) it_C.next();
+
+
+//                                    if (C_str.startsWith("@")) {
+//                                        Barr = C_str.split("\\|")[0].split("\\.");
+//                                        B_opt = Barr[Barr.length-1];
+//
+//                                    }
+//                                     && ((C_str.startsWith("@") && B_str == B_opt) || !C_str.startsWith("@"))
+
+
+                                        C_str = C.getKey().toString();
+                                        A_set = m_SytacticRulesTable.get(B_str + " " + C_str);
 
                                         if (A_set != null) {
 
@@ -209,7 +227,7 @@ public class Decode {
                                                     if (bp[j][span] == null) {
                                                         bp[j][span] = new HashMap<>();
                                                     }
-                                                    bp[j][span].put(A, new BackPointer(k, B.getKey().toString(), C.getKey().toString()));
+                                                    bp[j][span].put(A, new BackPointer(k, B_str, C_str));
                                                 }
                                             }
                                         }
@@ -269,10 +287,10 @@ public class Decode {
 
                 }
             }
-        } catch (Exception e) {
-            System.out.println(e);
-            return dummyParser(input);
-        }
+//        } catch (Exception e) {
+//            System.out.println(e);
+//            return dummyParser(input);
+//        }
         Node top = new Node("TOP");
         top.setRoot(true);
 

@@ -3,10 +3,8 @@ package parse;
 import grammar.Grammar;
 import grammar.Rule;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.sql.Time;
+import java.util.*;
 
 import bracketimport.TreebankReader;
 
@@ -76,11 +74,12 @@ public class Parse {
 		// 4. decode
 		//myGoldTreebank.size()
 		List<Tree> myParseTrees = new ArrayList<Tree>();
-		for (int i = 0; i <10 ; i++) {
+		for (int i = 0; i <30 ; i++) {
 			List<String> mySentence = myGoldTreebank.getAnalyses().get(i).getYield();
 			//Test: List.of("the","man","saw","the","woman","with","the","dog")
 			Tree myParseTree = Decode.getInstance(myGrammar).decode(mySentence);
 			myParseTrees.add(myParseTree);
+			System.out.println(i +" " +"("+mySentence.size()+") "+ new Date().toString());
 		}
 		
 		// 5. de-transform trees
