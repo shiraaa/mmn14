@@ -4,6 +4,7 @@ import grammar.Grammar;
 import grammar.Rule;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import tree.Node;
 import tree.Terminal;
@@ -17,7 +18,7 @@ public class Decode {
     public static Set<String> m_nonTerminals = null;
     public static Set<String> m_terminals = null;
     public static HashMap<String, BackPointer>[][] bp = null;
-    public static HashMap<String, Double>[][] cky = null;
+    public static Map<String, Double>[][] cky = null;
     public static Map<String, Map<String, Rule>> m_unaryRulesTable = null;
     public static Map<String, Set<Rule>> m_SytacticRulesTable = null;
     public static List<String> sentence = null;
@@ -81,7 +82,7 @@ public class Decode {
         sentence = input;
 
         int numOfTerminals = m_terminals.size();
-        cky = new HashMap[input_length + 1][input_length + 1];
+        cky = new ConcurrentHashMap[input_length + 1][input_length + 1];
 
         //Back pointer
         bp = new HashMap[input_length + 1][input_length + 1];
@@ -98,7 +99,7 @@ public class Decode {
 
                         if (rule.getRHS().toString().compareTo(input.get(i - 1)) == 0) {
                             if (cky[i - 1][i] == null) {
-                                cky[i - 1][i] = new HashMap<>();
+                                cky[i - 1][i] = new ConcurrentHashMap<>();
                             }
                             cky[i - 1][i].put(rule.getLHS().toString(), rule.getMinusLogProb());
                         }
@@ -108,14 +109,14 @@ public class Decode {
                 }
 
                 if (cky[i - 1][i] == null) {
-                    cky[i - 1][i] = new HashMap<>();
+                    cky[i - 1][i] = new ConcurrentHashMap<>();
                     cky[i - 1][i].put("NN", (double) 0);
                 }
 
                 //unary rules A-->B
 
-                HashMap cloned = (HashMap) cky[i - 1][i].clone();
-                Iterator it1 = cloned.entrySet().iterator(); //without clone getting concurrency iterator issue
+               // HashMap cloned = (HashMap) cky[i - 1][i];
+                Iterator it1 = cky[i - 1][i].entrySet().iterator(); //without clone getting concurrency iterator issue
 
                 while (it1.hasNext()) {
 
@@ -214,7 +215,7 @@ public class Decode {
 
 
                                                 if (cky[j][span] == null) {
-                                                    cky[j][span] = new HashMap<>();
+                                                    cky[j][span] = new ConcurrentHashMap<>();
                                                 }
 
                                            /* if (B_prob < 0 && C_prob < 0){
@@ -238,17 +239,22 @@ public class Decode {
                         }
                     }
                     if (cky[j][span] != null) {
+                        //String key;
 
-                        HashMap cloned = (HashMap) cky[j][span].clone();
-                        Iterator it = cloned.entrySet().iterator(); //without clone getting concurrency iterator issue
+//                        String[] keys=new String[cky[j][span].keySet().size()];
+//                        cky[j][span].keySet().toArray(keys);
+//                        HashMap cloned = (HashMap) cky[j][span].clone();
+                       // Iterator it = keys.iterator(); //cloned.entrySet().iterator(); //without clone getting concurrency iterator issue
                         Iterator it2;
                         Map.Entry el2;
                         Rule rule;
                         BackPointer unar_bp;
-                        while (it.hasNext()) {
-                            Map.Entry el = (Map.Entry) it.next();
-                            if (m_unaryRulesTable.containsKey(el.getKey())) {
-                                it2 = m_unaryRulesTable.get(el.getKey()).entrySet().iterator();
+                        for(String key:cky[j][span].keySet()){
+                       // while (it.hasNext()) {
+                            //key=it.next().toString();
+                            //double el_prob = cky[j][span].get( key);
+                            if (m_unaryRulesTable.containsKey(key)) {
+                                it2 = m_unaryRulesTable.get(key).entrySet().iterator();
                                 while (it2.hasNext()) {
                                     el2 = (Map.Entry) it2.next();
                                     rule = (Rule) el2.getValue();
