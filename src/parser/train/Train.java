@@ -92,7 +92,7 @@ public class Train {
             binarize(cloned_daughters.get(0));
 
 
-            while (split < originals_daughters.size() - 1) {
+            while (split < originals_daughters.size() - 2) {
 
                 cloned_daughters.get(split).setParent(split_node);
 
@@ -108,7 +108,8 @@ public class Train {
             }
             //num of daughters is even
             binarize(cloned_daughters.get(split));
-            split_node.setDaughters(List.of(cloned_daughters.get(split)));
+
+            split_node.setDaughters(cloned_daughters.subList(split,cloned_daughters.size()));
 
 
         } else if (parent.getNumberOfDaughters() > 0) {

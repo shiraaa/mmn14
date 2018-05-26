@@ -17,8 +17,11 @@ public class Decode {
     public static Set<String> m_nonTerminals = null;
     public static Set<String> m_terminals = null;
     public static HashMap<String, BackPointer>[][] bp = null;
+    public static HashMap<String, Double>[][] cky=null;
     public static Map<String, Map<String, Rule>> m_unaryRulesTable = null;
     public static Map<String, Set<Rule>> m_SytacticRulesTable = null;
+    public static List<String> sentence=null;
+
 
 
     /**
@@ -76,9 +79,10 @@ public class Decode {
     private Tree CYK(List<String> input) {
         int input_length = input.size();
         //Rule NN=(Rule)m_mapLexicalRules.get("NN");
+        sentence=input;
 
         int numOfTerminals = m_terminals.size();
-        HashMap<String, Double>[][] cky = new HashMap[input_length + 1][input_length + 1];
+       cky = new HashMap[input_length + 1][input_length + 1];
 
         //Back pointer
         bp = new HashMap[input_length + 1][input_length + 1];
@@ -158,7 +162,7 @@ public class Decode {
                         if (cky[j][k] != null && cky[k][span] != null) {
 
                             Iterator it_B = cky[j][k].entrySet().iterator();
-                            Iterator it_C ;
+                            Iterator it_C;
 
                             while (it_B.hasNext()) {
 
@@ -179,8 +183,8 @@ public class Decode {
 
                                         Rule A_rule = null;
                                         while (a_itr.hasNext()) {
-                                            A_rule= (Rule) a_itr.next();
-                                            String A=A_rule.getLHS().toString();
+                                            A_rule = (Rule) a_itr.next();
+                                            String A = A_rule.getLHS().toString();
 
 
                                             if (cky[j][span] == null) {
@@ -191,8 +195,7 @@ public class Decode {
                                                 System.out.println("prob ERROR");
                                             }*/
 
-                                            if (cky[j][span].get(A) == null || cky[j][span].get(A) > A_rule.getMinusLogProb() + B_prob + C_prob)
-                                            {
+                                            if (cky[j][span].get(A) == null || cky[j][span].get(A) > A_rule.getMinusLogProb() + B_prob + C_prob) {
                                                 cky[j][span].put(A, A_rule.getMinusLogProb() + B_prob + C_prob);
 
                                                 if (bp[j][span] == null) {
@@ -220,6 +223,9 @@ public class Decode {
                                     Map.Entry el2 = (Map.Entry) it2.next();
                                     Rule rule = (Rule) el2.getValue();
                                     cky[j][span].put(el2.getKey().toString(), cky[j][span].get(rule.getRHS().toString()) + rule.getMinusLogProb()); //**CHECK PROB**//
+                                    BackPointer unar_bp=bp[j][span].get(rule.getRHS().toString());
+                                    bp[j][span].put(el2.getKey().toString(), new BackPointer(unar_bp.getK(), unar_bp.getNonT1(), unar_bp.getNonT2()));
+
                                 }
 
                             }
@@ -275,6 +281,7 @@ public class Decode {
 
     private void buildTree(Node parent, BackPointer A, int j, int i) {
 
+
         if (A == null) {
             return;
         }
@@ -283,24 +290,46 @@ public class Decode {
 
         String B = A.getNonT1();
         String C = A.getNonT2();
-
         Node new_node_B = new Node(B);
         Node new_node_C = new Node(C);
 
-        parent.addDaughter(new_node_B);
-        parent.addDaughter(new_node_C);
+        if (C.startsWith("@")) {
+            parent.addDaughter(new_node_B);
 
-        new_node_B.setParent(parent);
-        new_node_C.setParent(parent);
+            if (bp[j][k] != null) {
 
-        if (bp[j][k] != null) {
-            buildTree(new_node_B, bp[j][k].get(B), j, k);
+                buildTree(new_node_B, bp[j][k].get(B), j, k);
+            }
+            else{
+                new_node_B.addDaughter( new Node(sentence.get(j)));
+            }
+            if (bp[k][i] != null) {
+
+                buildTree(parent, bp[k][i].get(C), k, i);
+
+            }else {
+                //new_node_C.addDaughter(new Node(sentence.get(k)));
+            }
+
+        } else {
+
+            parent.addDaughter(new_node_B);
+            parent.addDaughter(new_node_C);
+
+
+
+            if (bp[j][k] != null) {
+                buildTree(new_node_B, bp[j][k].get(B), j, k);
+            }else{
+                new_node_B.addDaughter( new Node(sentence.get(j)));
+            }
+
+            if (bp[k][i] != null) {
+                buildTree(new_node_C, bp[k][i].get(C), k, i);
+            }else{
+                new_node_C.addDaughter(new Node(sentence.get(k)));
+            }
         }
-
-        if (bp[k][i] != null) {
-            buildTree(new_node_C, bp[k][i].get(C), k, i);
-        }
-
 
     }
 }
