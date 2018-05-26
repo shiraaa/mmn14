@@ -17,11 +17,10 @@ public class Decode {
     public static Set<String> m_nonTerminals = null;
     public static Set<String> m_terminals = null;
     public static HashMap<String, BackPointer>[][] bp = null;
-    public static HashMap<String, Double>[][] cky=null;
+    public static HashMap<String, Double>[][] cky = null;
     public static Map<String, Map<String, Rule>> m_unaryRulesTable = null;
     public static Map<String, Set<Rule>> m_SytacticRulesTable = null;
-    public static List<String> sentence=null;
-
+    public static List<String> sentence = null;
 
 
     /**
@@ -79,10 +78,10 @@ public class Decode {
     private Tree CYK(List<String> input) {
         int input_length = input.size();
         //Rule NN=(Rule)m_mapLexicalRules.get("NN");
-        sentence=input;
+        sentence = input;
 
         int numOfTerminals = m_terminals.size();
-       cky = new HashMap[input_length + 1][input_length + 1];
+        cky = new HashMap[input_length + 1][input_length + 1];
 
         //Back pointer
         bp = new HashMap[input_length + 1][input_length + 1];
@@ -154,6 +153,14 @@ public class Decode {
 
                 }*/
 
+            Iterator it_B;
+            Iterator it_C;
+            Set<Rule> A_set;
+            Iterator a_itr;
+            Rule A_rule = null;
+            String A = null;
+            Map.Entry B;
+            Map.Entry C;
 
             for (int span = 2; span <= input_length; span++) {
                 for (int j = span - 2; j >= 0; j--) {
@@ -161,47 +168,49 @@ public class Decode {
                         //System.out.println(span);
                         if (cky[j][k] != null && cky[k][span] != null) {
 
-                            Iterator it_B = cky[j][k].entrySet().iterator();
-                            Iterator it_C;
+                            it_B = cky[j][k].entrySet().iterator();
+
 
                             while (it_B.hasNext()) {
 
-                                Map.Entry B = (Map.Entry) it_B.next();
+                                B = (Map.Entry) it_B.next();
                                 it_C = cky[k][span].entrySet().iterator();
 
                                 while (it_C.hasNext()) {
 
-                                    Map.Entry C = (Map.Entry) it_C.next();
-                                    Set<Rule> A_set = m_SytacticRulesTable.get(B.getKey().toString() + " " + C.getKey().toString());
+                                    C = (Map.Entry) it_C.next();
+                                    if (!B.getKey().toString().startsWith("@") && !C.getKey().toString().startsWith("@")) {
+                                        A_set = m_SytacticRulesTable.get(B.getKey().toString() + " " + C.getKey().toString());
 
-                                    if (A_set != null) {
+                                        if (A_set != null) {
 
-                                        double B_prob = (double) B.getValue();
-                                        double C_prob = (double) C.getValue();
+                                            double B_prob = (double) B.getValue();
+                                            double C_prob = (double) C.getValue();
 
-                                        Iterator a_itr = A_set.iterator();
-
-                                        Rule A_rule = null;
-                                        while (a_itr.hasNext()) {
-                                            A_rule = (Rule) a_itr.next();
-                                            String A = A_rule.getLHS().toString();
+                                            a_itr = A_set.iterator();
 
 
-                                            if (cky[j][span] == null) {
-                                                cky[j][span] = new HashMap<>();
-                                            }
+                                            while (a_itr.hasNext()) {
+                                                A_rule = (Rule) a_itr.next();
+                                                A = A_rule.getLHS().toString();
+
+
+                                                if (cky[j][span] == null) {
+                                                    cky[j][span] = new HashMap<>();
+                                                }
 
                                            /* if (B_prob < 0 && C_prob < 0){
                                                 System.out.println("prob ERROR");
                                             }*/
 
-                                            if (cky[j][span].get(A) == null || cky[j][span].get(A) > A_rule.getMinusLogProb() + B_prob + C_prob) {
-                                                cky[j][span].put(A, A_rule.getMinusLogProb() + B_prob + C_prob);
+                                                if (cky[j][span].get(A) == null || cky[j][span].get(A) > A_rule.getMinusLogProb() + B_prob + C_prob) {
+                                                    cky[j][span].put(A, A_rule.getMinusLogProb() + B_prob + C_prob);
 
-                                                if (bp[j][span] == null) {
-                                                    bp[j][span] = new HashMap<>();
+                                                    if (bp[j][span] == null) {
+                                                        bp[j][span] = new HashMap<>();
+                                                    }
+                                                    bp[j][span].put(A, new BackPointer(k, B.getKey().toString(), C.getKey().toString()));
                                                 }
-                                                bp[j][span].put(A, new BackPointer(k, B.getKey().toString(), C.getKey().toString()));
                                             }
                                         }
                                     }
@@ -214,16 +223,19 @@ public class Decode {
 
                         HashMap cloned = (HashMap) cky[j][span].clone();
                         Iterator it = cloned.entrySet().iterator(); //without clone getting concurrency iterator issue
-
+                        Iterator it2;
+                        Map.Entry el2;
+                        Rule rule;
+                        BackPointer unar_bp;
                         while (it.hasNext()) {
                             Map.Entry el = (Map.Entry) it.next();
                             if (m_unaryRulesTable.containsKey(el.getKey())) {
-                                Iterator it2 = m_unaryRulesTable.get(el.getKey()).entrySet().iterator();
+                                it2 = m_unaryRulesTable.get(el.getKey()).entrySet().iterator();
                                 while (it2.hasNext()) {
-                                    Map.Entry el2 = (Map.Entry) it2.next();
-                                    Rule rule = (Rule) el2.getValue();
+                                    el2 = (Map.Entry) it2.next();
+                                    rule = (Rule) el2.getValue();
                                     cky[j][span].put(el2.getKey().toString(), cky[j][span].get(rule.getRHS().toString()) + rule.getMinusLogProb()); //**CHECK PROB**//
-                                    BackPointer unar_bp=bp[j][span].get(rule.getRHS().toString());
+                                    unar_bp = bp[j][span].get(rule.getRHS().toString());
                                     bp[j][span].put(el2.getKey().toString(), new BackPointer(unar_bp.getK(), unar_bp.getNonT1(), unar_bp.getNonT2()));
 
                                 }
@@ -299,15 +311,14 @@ public class Decode {
             if (bp[j][k] != null) {
 
                 buildTree(new_node_B, bp[j][k].get(B), j, k);
-            }
-            else{
-                new_node_B.addDaughter( new Node(sentence.get(j)));
+            } else {
+                new_node_B.addDaughter(new Node(sentence.get(j)));
             }
             if (bp[k][i] != null) {
 
                 buildTree(parent, bp[k][i].get(C), k, i);
 
-            }else {
+            } else {
                 //new_node_C.addDaughter(new Node(sentence.get(k)));
             }
 
@@ -317,16 +328,15 @@ public class Decode {
             parent.addDaughter(new_node_C);
 
 
-
             if (bp[j][k] != null) {
                 buildTree(new_node_B, bp[j][k].get(B), j, k);
-            }else{
-                new_node_B.addDaughter( new Node(sentence.get(j)));
+            } else {
+                new_node_B.addDaughter(new Node(sentence.get(j)));
             }
 
             if (bp[k][i] != null) {
                 buildTree(new_node_C, bp[k][i].get(C), k, i);
-            }else{
+            } else {
                 new_node_C.addDaughter(new Node(sentence.get(k)));
             }
         }

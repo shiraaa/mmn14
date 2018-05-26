@@ -76,8 +76,8 @@ public class Parse {
 		// 4. decode
 		//myGoldTreebank.size()
 		List<Tree> myParseTrees = new ArrayList<Tree>();
-		for (int i = 0; i <50 ; i++) {
-			List<String> mySentence = myGoldTreebank.getAnalyses().get(1).getYield();
+		for (int i = 0; i <10 ; i++) {
+			List<String> mySentence = myGoldTreebank.getAnalyses().get(i).getYield();
 			//Test: List.of("the","man","saw","the","woman","with","the","dog")
 			Tree myParseTree = Decode.getInstance(myGrammar).decode(mySentence);
 			myParseTrees.add(myParseTree);
