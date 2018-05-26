@@ -15,8 +15,8 @@
       <file leaf-file-name="Train.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/parser/train/Train.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="111" column="91" selection-start-line="111" selection-start-column="91" selection-end-line="111" selection-end-column="91" />
+            <state relative-caret-position="1666">
+              <caret line="109" column="93" selection-start-line="109" selection-start-column="93" selection-end-line="109" selection-end-column="93" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -27,8 +27,8 @@
       <file leaf-file-name="Parse.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/parser/parse/Parse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="81" selection-start-line="81" selection-end-line="81" />
+            <state relative-caret-position="1513">
+              <caret line="105" column="38" lean-forward="true" selection-start-line="105" selection-start-column="38" selection-end-line="105" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -36,8 +36,26 @@
       <file leaf-file-name="Decode.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/parser/decode/Decode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2126">
-              <caret line="161" selection-start-line="161" selection-end-line="161" />
+            <state relative-caret-position="510">
+              <caret line="332" lean-forward="true" selection-start-line="332" selection-end-line="332" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Tuple.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/parser/decode/Tuple.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HashMap.class" pinned="false" current-in-tab="false">
+        <entry file="jrt:///usr/lib/jvm/default-java!/java.base/java/util/HashMap.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="8143">
+              <caret line="508" column="28" selection-start-line="508" selection-start-column="28" selection-end-line="508" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -57,7 +75,7 @@
       <file leaf-file-name="Node.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/parser/tree/Node.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
+            <state relative-caret-position="1632">
               <caret line="102" selection-start-line="102" selection-end-line="102" />
               <folding>
                 <element signature="e#1156#1157#0" expanded="true" />
@@ -70,7 +88,7 @@
       <file leaf-file-name="Grammar.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/parser/grammar/Grammar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1325">
+            <state relative-caret-position="1700">
               <caret line="114" selection-start-line="114" selection-end-line="114" />
               <folding>
                 <element signature="e#4816#4817#0" expanded="true" />
@@ -80,15 +98,6 @@
                 <element signature="e#5342#5343#0" expanded="true" />
                 <element signature="e#5383#5384#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Set.class" pinned="false" current-in-tab="false">
-        <entry file="jrt:///usr/lib/jvm/default-java!/java.base/java/util/Set.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -118,9 +127,10 @@
         <option value="$PROJECT_DIR$/src/parser/decode/BackPointer.java" />
         <option value="$PROJECT_DIR$/src/parser/grammar/Rule.java" />
         <option value="$PROJECT_DIR$/src/parser/grammar/Grammar.java" />
-        <option value="$PROJECT_DIR$/src/parser/decode/Decode.java" />
-        <option value="$PROJECT_DIR$/src/parser/train/Train.java" />
+        <option value="$PROJECT_DIR$/src/parser/decode/Tuple.java" />
         <option value="$PROJECT_DIR$/src/parser/parse/Parse.java" />
+        <option value="$PROJECT_DIR$/src/parser/train/Train.java" />
+        <option value="$PROJECT_DIR$/src/parser/decode/Decode.java" />
       </list>
     </option>
   </component>
@@ -135,7 +145,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -176,7 +186,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -214,6 +224,9 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <RunnerSettings RunnerId="Debug with VisualVM">
+        <option name="visualVMId" value="22395061675270" />
+      </RunnerSettings>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -293,12 +306,14 @@
       <window_info anchor="bottom" id="Version Control" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="1" />
       <window_info id="Designer" order="3" />
+      <window_info active="true" anchor="bottom" id="Run with VisualVM" visible="true" weight="0.329718" />
       <window_info content_ui="combo" id="Project" order="4" visible="true" weight="0.11279007" />
       <window_info id="Learn" order="1" />
       <window_info id="Structure" order="5" side_tool="true" weight="0.25" />
       <window_info id="UI Designer" order="0" />
-      <window_info active="true" anchor="bottom" id="Debug" order="7" visible="true" weight="0.29934925" />
+      <window_info anchor="bottom" id="Debug" order="7" weight="0.29934925" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug with VisualVM" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
@@ -316,27 +331,21 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/parser/train/Train.java</url>
-          <line>152</line>
+          <line>153</line>
           <properties />
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/parser/train/Train.java</url>
-          <line>170</line>
+          <line>171</line>
           <properties />
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/parser/decode/Decode.java</url>
-          <line>260</line>
+          <line>245</line>
           <properties />
           <option name="timeStamp" value="73" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/parser/decode/Decode.java</url>
-          <line>194</line>
-          <properties />
-          <option name="timeStamp" value="253" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/parser/parse/Parse.java</url>
@@ -346,15 +355,21 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/parser/decode/Decode.java</url>
-          <line>284</line>
+          <line>276</line>
           <properties />
-          <option name="timeStamp" value="325" />
+          <option name="timeStamp" value="364" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/parser/decode/Decode.java</url>
+          <line>273</line>
+          <properties />
+          <option name="timeStamp" value="377" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="330" />
+      <option name="time" value="378" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -372,6 +387,46 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/parser/tree/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1734">
+          <caret line="102" selection-start-line="102" selection-end-line="102" />
+          <folding>
+            <element signature="e#1156#1157#0" expanded="true" />
+            <element signature="e#1170#1171#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/grammar/Grammar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1700">
+          <caret line="114" selection-start-line="114" selection-end-line="114" />
+          <folding>
+            <element signature="e#4816#4817#0" expanded="true" />
+            <element signature="e#4855#4856#0" expanded="true" />
+            <element signature="e#5175#5176#0" expanded="true" />
+            <element signature="e#5215#5216#0" expanded="true" />
+            <element signature="e#5342#5343#0" expanded="true" />
+            <element signature="e#5383#5384#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jrt:///usr/lib/jvm/default-java!/java.base/java/util/Set.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/decode/Decode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4828">
+          <caret line="284" selection-start-line="284" selection-end-line="284" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/parser/train/Train.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -632,13 +687,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jrt:///usr/lib/jvm/default-java!/java.base/java/util/HashMap.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="508" column="28" selection-start-line="508" selection-start-column="28" selection-end-line="508" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/parser/grammar/Rule.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-357" />
@@ -651,9 +699,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="799">
           <caret line="47" selection-start-line="47" selection-end-line="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -676,7 +721,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/parser/grammar/Grammar.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1325">
+        <state relative-caret-position="1700">
           <caret line="114" selection-start-line="114" selection-end-line="114" />
           <folding>
             <element signature="e#4816#4817#0" expanded="true" />
@@ -701,7 +746,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/parser/tree/Node.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
+        <state relative-caret-position="1632">
           <caret line="102" selection-start-line="102" selection-end-line="102" />
           <folding>
             <element signature="e#1156#1157#0" expanded="true" />
@@ -710,10 +755,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="jrt:///usr/lib/jvm/default-java!/java.base/java/util/HashMap.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8143">
+          <caret line="508" column="28" selection-start-line="508" selection-start-column="28" selection-end-line="508" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/decode/Tuple.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/parser/train/Train.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="111" column="91" selection-start-line="111" selection-start-column="91" selection-end-line="111" selection-end-column="91" />
+        <state relative-caret-position="1666">
+          <caret line="109" column="93" selection-start-line="109" selection-start-column="93" selection-end-line="109" selection-end-column="93" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -722,15 +781,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/parser/parse/Parse.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="81" selection-start-line="81" selection-end-line="81" />
+        <state relative-caret-position="1513">
+          <caret line="105" column="38" lean-forward="true" selection-start-line="105" selection-start-column="38" selection-end-line="105" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/parser/decode/Decode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2126">
-          <caret line="161" selection-start-line="161" selection-end-line="161" />
+        <state relative-caret-position="510">
+          <caret line="332" lean-forward="true" selection-start-line="332" selection-end-line="332" />
         </state>
       </provider>
     </entry>
