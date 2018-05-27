@@ -34,7 +34,7 @@ public class Grammar {
 
 
 
-	protected Map<String,Set<Rule>> m_syntacticRulesTable=new HashMap<>();
+	protected Map<String,ArrayList<Rule>> m_syntacticRulesTable=new HashMap<>();
 		
 	public Grammar() {
 		super();
@@ -50,7 +50,7 @@ public class Grammar {
 	public void setLexicalEntries(Map<String, Set<Rule>> m_lexLexicalEntries) {
 		this.m_lexLexicalEntries = m_lexLexicalEntries;
 	}
-	public Map<String, Set<Rule>> getSyntacticRulesTable() {
+	public Map<String, ArrayList<Rule>> getSyntacticRulesTable() {
 		return m_syntacticRulesTable;
 	}
 	public Map<String, Map<String,Rule>> getUnaryRulesTable() {
@@ -98,18 +98,18 @@ public class Grammar {
 			Rule entry = (Rule) it.next();
 			if (!entry.isUnary()) {
 				if (m_syntacticRulesTable.containsKey((entry.getRHS().toString()))) {
-					Set<Rule> table_entry = m_syntacticRulesTable.get(entry.getRHS().toString());
+					ArrayList<Rule> table_entry = m_syntacticRulesTable.get(entry.getRHS().toString());
 					if (!table_entry.contains(entry)) //Not sure what it checks
 						m_syntacticRulesTable.get(entry.getRHS().toString()).add(entry);
 				} else {
-					HashSet new_hashSet = new HashSet<Rule>();
+					ArrayList new_hashSet = new ArrayList();
 					new_hashSet.add(entry);
 					m_syntacticRulesTable.put(entry.getRHS().toString(), new_hashSet);
 				}
 			}
 		}
 		int counter=0;
-		for(Set<Rule> set:m_syntacticRulesTable.values()){
+		for(ArrayList<Rule> set:m_syntacticRulesTable.values()){
 			counter +=set.size();
 		}
 		System.out.println("table Size "+counter);

@@ -27,8 +27,11 @@
       <file leaf-file-name="Parse.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/parser/parse/Parse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="79" selection-start-line="79" selection-end-line="79" />
+            <state relative-caret-position="630">
+              <caret line="81" column="43" selection-start-line="81" selection-start-column="43" selection-end-line="81" selection-end-column="43" />
+              <folding>
+                <element signature="e#2080#2086#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -36,8 +39,8 @@
       <file leaf-file-name="Decode.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/parser/decode/Decode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="207" lean-forward="true" selection-start-line="207" selection-end-line="207" />
+            <state relative-caret-position="941">
+              <caret line="78" column="32" selection-start-line="78" selection-start-column="32" selection-end-line="78" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -67,8 +70,8 @@
       <file leaf-file-name="Tuple.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/parser/decode/Tuple.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            <state relative-caret-position="34">
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -110,8 +113,8 @@
       <file leaf-file-name="Grammar.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/parser/grammar/Grammar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1108">
-              <caret line="52" column="34" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
+            <state relative-caret-position="347">
+              <caret line="111" column="21" selection-start-line="111" selection-start-column="21" selection-end-line="111" selection-end-column="21" />
               <folding>
                 <element signature="e#1405#1406#0" expanded="true" />
                 <element signature="e#1440#1441#0" expanded="true" />
@@ -143,6 +146,7 @@
       <find>immu</find>
       <find>set</find>
       <find>clone</find>
+      <find>Tuple</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -152,9 +156,9 @@
         <option value="$PROJECT_DIR$/src/parser/tree/Node.java" />
         <option value="$PROJECT_DIR$/src/parser/decode/BackPointer.java" />
         <option value="$PROJECT_DIR$/src/parser/grammar/Rule.java" />
-        <option value="$PROJECT_DIR$/src/parser/grammar/Grammar.java" />
         <option value="$PROJECT_DIR$/src/parser/decode/Tuple.java" />
         <option value="$PROJECT_DIR$/src/parser/train/Train.java" />
+        <option value="$PROJECT_DIR$/src/parser/grammar/Grammar.java" />
         <option value="$PROJECT_DIR$/src/parser/parse/Parse.java" />
         <option value="$PROJECT_DIR$/src/parser/decode/Decode.java" />
       </list>
@@ -220,6 +224,7 @@
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="SearchEverywhereHistoryKey" value="rule&#9;PSI&#9;JAVA://grammar.Rule" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/mmn14-parsing-openu1.iml" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -321,7 +326,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1433" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="1" />
       <window_info anchor="bottom" id="TODO" order="10" />
@@ -334,10 +338,11 @@
       <window_info id="Designer" order="3" />
       <window_info anchor="bottom" id="Run with VisualVM" weight="0.329718" />
       <window_info content_ui="combo" id="Project" order="4" visible="true" weight="0.11279007" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.329718" />
       <window_info id="Learn" order="1" />
       <window_info id="Structure" order="5" side_tool="true" weight="0.25" />
       <window_info id="UI Designer" order="0" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.29934925" />
+      <window_info anchor="bottom" id="Debug" order="7" weight="0.43492407" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug with VisualVM" weight="0.329718" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
@@ -346,7 +351,6 @@
       <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="5" weight="0.329718" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -369,15 +373,27 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/parser/decode/Decode.java</url>
-          <line>311</line>
+          <line>319</line>
           <properties />
           <option name="timeStamp" value="418" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/parser/decode/Decode.java</url>
+          <line>299</line>
+          <properties />
+          <option name="timeStamp" value="449" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/parser/decode/Decode.java</url>
+          <line>271</line>
+          <properties />
+          <option name="timeStamp" value="452" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="442" />
+      <option name="time" value="460" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -745,13 +761,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/decode/Tuple.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jrt:///usr/lib/jvm/default-java!/java.base/java/lang/String.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
@@ -759,23 +768,6 @@
           <folding>
             <element signature="e#14962#14963#0" expanded="true" />
             <element signature="e#15011#15012#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/grammar/Grammar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1108">
-          <caret line="52" column="34" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
-          <folding>
-            <element signature="e#1405#1406#0" expanded="true" />
-            <element signature="e#1440#1441#0" expanded="true" />
-            <element signature="e#4816#4817#0" expanded="true" />
-            <element signature="e#4855#4856#0" expanded="true" />
-            <element signature="e#5175#5176#0" expanded="true" />
-            <element signature="e#5215#5216#0" expanded="true" />
-            <element signature="e#5342#5343#0" expanded="true" />
-            <element signature="e#5383#5384#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -797,13 +789,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/parser/parse/Parse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jrt:///usr/lib/jvm/default-java!/java.base/java/util/Set.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -811,10 +796,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/grammar/Grammar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="111" column="21" selection-start-line="111" selection-start-column="21" selection-end-line="111" selection-end-column="21" />
+          <folding>
+            <element signature="e#1405#1406#0" expanded="true" />
+            <element signature="e#1440#1441#0" expanded="true" />
+            <element signature="e#4816#4817#0" expanded="true" />
+            <element signature="e#4855#4856#0" expanded="true" />
+            <element signature="e#5175#5176#0" expanded="true" />
+            <element signature="e#5215#5216#0" expanded="true" />
+            <element signature="e#5342#5343#0" expanded="true" />
+            <element signature="e#5383#5384#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/decode/Tuple.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/parser/parse/Parse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="81" column="43" selection-start-line="81" selection-start-column="43" selection-end-line="81" selection-end-column="43" />
+          <folding>
+            <element signature="e#2080#2086#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/parser/decode/Decode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="207" lean-forward="true" selection-start-line="207" selection-end-line="207" />
+        <state relative-caret-position="941">
+          <caret line="78" column="32" selection-start-line="78" selection-start-column="32" selection-end-line="78" selection-end-column="32" />
         </state>
       </provider>
     </entry>
